@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Quote extends Model
 {
     use HasFactory;
+
+    public function character() {
+        return $this->belongsTo(Character::class);
+    }
 }

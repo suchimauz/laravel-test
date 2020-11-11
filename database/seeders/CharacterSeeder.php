@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use GuidoCella\EloquentPopulator\Populator;
+use App\Models\Character;
+use App\Models\Episode;
+
 
 class CharacterSeeder extends Seeder
 {
@@ -15,18 +17,15 @@ class CharacterSeeder extends Seeder
      */
     public function run()
     {
-        $data = [];
+        Populator::setSeeding();
+        Character::factory(100)->create();
 
-        for($i = 1; $i <= 100; $i++) {
-            $data[] = [
-                'name' => Str::random(10),
-                'birthday' => '1998-11-13',
-                'img' => 'image.jpeg',
-                'nickname' => Str::random(7),
-                'portrayed' => Str::random(15)
-            ];
-        }
+        $characters = Character::all();
 
-        DB::table('characters')->insert($data);
+        Episode::all()->each(function ($episode) use ($characters) {
+            $episode->characters()->attach(
+                $characters->random(rand(5, 15))->pluck('id')->toArray()
+            );
+        });
     }
 }

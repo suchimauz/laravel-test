@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Character;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use GuidoCella\EloquentPopulator\Populator;
+use App\Models\Quote;
+
+use function PHPUnit\Framework\isEmpty;
 
 class QuoteSeeder extends Seeder
 {
@@ -15,33 +18,17 @@ class QuoteSeeder extends Seeder
      */
     public function run()
     {
-        $episode_character = [];
+        Populator::setSeeding();
+        Quote::factory(500)->create();
 
-        $quotes = [];
-        $quotes_count = 500;
-
-        $quotes_for_one_episode = 17;
-        $quotes_for_one_character = 5;
-
-        while($quotes_count > 0) {
-            $episode_id = ceil($quotes_count / $quotes_for_one_episode);
-            $character_id = ceil($quotes_count / $quotes_for_one_character);
-
-            $quotes[] = [
-                'quote' => Str::random(50),
-                'episode_id' => $episode_id,
-                'character_id' => $character_id,
-            ];
-
-            $episode_character[] = [
-                'episode_id' => $episode_id,
-                'character_id' => $character_id
-            ];
-
-            $quotes_count--;
-        }
-
-        DB::table('quotes')->insert($quotes);
-        DB::table('episode_character')->insert($episode_character);
+        Character::all()->each(function ($character) {
+            Quote::whereNull('character_id')
+                ->orderByRaw("RAND()")
+                ->limit(rand(3, 7))
+                ->get()
+                ->each(function ($quote) use ($character) {
+                    $quote->update(['character_id' => $character->id]);
+                });
+        });
     }
 }

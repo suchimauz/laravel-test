@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d29e5a4dd71d434e8ce08511edd9e55e",
+    "content-hash": "cdd8e1975ed140c8052600be745f26d7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6681,6 +6681,50 @@
                 "whoops"
             ],
             "time": "2020-10-20T12:00:00+00:00"
+        },
+        {
+            "name": "guidocella/eloquent-populator",
+            "version": "v3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guidocella/eloquent-populator.git",
+                "reference": "b5cc435503b4548d8293fc97fc06df4b7aa35e81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guidocella/eloquent-populator/zipball/b5cc435503b4548d8293fc97fc06df4b7aa35e81",
+                "reference": "b5cc435503b4548d8293fc97fc06df4b7aa35e81",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.5",
+                "fzaninotto/faker": "^1.4",
+                "illuminate/database": "^8",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "guidocella/laravel-multilingual": "*",
+                "laravel/laravel": "^8",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GuidoCella\\EloquentPopulator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Guess attributes for Eloquent model factories",
+            "keywords": [
+                "database",
+                "eloquent",
+                "faker",
+                "laravel"
+            ],
+            "time": "2020-09-14T04:48:45+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
