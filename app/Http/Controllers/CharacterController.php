@@ -7,79 +7,48 @@ use Illuminate\Http\Request;
 
 class CharacterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        //
+        $search = $request->get('name');
+
+        if($request->get('limit')) {
+            $limit = $request->get('limit');
+        } else {
+            $limit = 10;
+        }
+
+        try {
+            $characters = new Character();
+
+            if ($search) {
+                foreach(explode(' ', $search) as $s) {
+                    $characters = $characters->where('name', 'like', '%' . $s . '%');
+                }
+            }
+
+            return responder()
+                    ->success($characters->paginate($limit))
+                    ->respond(200);
+        } catch(\Exception $e) {
+            return responder()
+                    ->error($e->getMessage())
+                    ->respond(500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function random()
     {
-        //
-    }
+        try {
+            $character = Character::orderByRaw("RAND()")->first();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Character  $character
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Character $character)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Character  $character
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Character $character)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Character  $character
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Character $character)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Character  $character
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Character $character)
-    {
-        //
+            return responder()
+                    ->success($character)
+                    ->respond(200);
+        } catch (\Exception $e) {
+            return responder()
+                    ->success($e->getMessage()())
+                    ->respond(500);
+        }
     }
 }
