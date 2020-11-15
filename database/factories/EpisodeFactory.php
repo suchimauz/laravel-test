@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Episode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use GuidoCella\EloquentPopulator\Populator;
+use Illuminate\Support\Str;
 
 class EpisodeFactory extends Factory
 {
@@ -22,7 +23,7 @@ class EpisodeFactory extends Factory
      */
     public function definition() {
         return array_merge(Populator::guessFormatters($this->model), [
-            'title' => substr($this->faker->sentence($nbWords = 6, $variableNbWords = true), 0, -1),
+            'title' => Str::beforeLast($this->faker->sentence($nbWords = 6, $variableNbWords = true), '.'),
         ]);
     }
 }
