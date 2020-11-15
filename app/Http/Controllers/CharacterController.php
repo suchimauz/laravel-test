@@ -26,14 +26,12 @@ class CharacterController extends Controller
                 }
             }
 
-            //$characters = $characters->with('episodes', 'quotes');
-
             return responder()
                 ->success($characters->paginate($limit))
                 ->with('episodes', 'quotes')
                 ->only([
                     'episodes' => ['id'],
-                    'quotes' => ['id'],
+                    'quotes' => ['id']
                 ])
                 ->respond(200);
         } catch (\Exception $e) {

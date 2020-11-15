@@ -22,10 +22,8 @@ class QuoteController extends Controller
         }
 
         try {
-            $quotes = Quote::paginate($limit);
-
             return responder()
-                ->success($quotes)
+                ->success(Quote::paginate($limit))
                 ->respond(200);
         } catch (\Exception $e) {
             return responder()
@@ -53,6 +51,7 @@ class QuoteController extends Controller
 
             return responder()
                 ->success($quote)
+                ->with('character')
                 ->respond(200);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return responder()

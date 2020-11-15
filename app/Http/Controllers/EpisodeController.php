@@ -17,10 +17,8 @@ class EpisodeController extends Controller
         }
 
         try {
-            $episodes = Episode::paginate($limit);
-
             return responder()
-                ->success($episodes)
+                ->success(Episode::paginate($limit))
                 ->respond(200);
         } catch (\Exception $e) {
             return responder()
@@ -32,9 +30,9 @@ class EpisodeController extends Controller
     public function show($id)
     {
         try {
-            $episode = Episode::findOrFail($id)->with('characters');
             return responder()
-                ->success($episode)
+                ->success(Episode::findOrFail($id))
+                ->with('characters')
                 ->respond();
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return responder()

@@ -15,4 +15,9 @@ class Episode extends Model
     {
         return $this->belongsToMany(Character::class);
     }
+
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
+    }
 }
