@@ -17,9 +17,12 @@ class CreateQuotesTable extends Migration
             $table->id();
             $table->mediumText('quote');
             $table->unsignedBigInteger('character_id')->nullable();
-            $table->timestamps();
+            $table->unsignedBigInteger('episode_id')->nullable();
 
             $table->foreign('character_id')->references('id')->on('characters');
+            $table->foreign('episode_id')->references('id')->on('episodes');
+
+            $table->timestamps();
         });
     }
 

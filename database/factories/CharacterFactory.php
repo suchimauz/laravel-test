@@ -22,7 +22,7 @@ class CharacterFactory extends Factory
      * @return array
      */
 
-    protected static $occupations = [
+    private static $occupations = [
         'Policeman', 'Webmaster', 'Public Relations Manager',
         'Secretary', 'Athlete', 'Receptionist', 'Filmmaker',
         'Dietician', 'Engineer', 'Teaching', 'Bouncer', 'Editor',
@@ -30,16 +30,22 @@ class CharacterFactory extends Factory
         'Carpenter', 'Business analyst', 'Lab assistant', 'Sales Assistant',
         'Physicist', 'Newspaper reporter', 'Computer programmer',
         'Judge', 'Optician', 'Correctional officer', 'Adult Education Teacher',
-        'Accountant', 'Attorney', 'Statistician'
+        'Accountant', 'Attorney', 'Statistician',
     ];
 
-    public function definition() {
+    private function getRandomOccupations() {
+        return Base::randomElements(static::$occupations, $count = rand(1,4));
+    }
+
+    public function definition()
+    {
         return array_merge(Populator::guessFormatters($this->model), [
             'name' => $this->faker->name,
             'portrayed' => $this->faker->name,
             'nickname' => $this->faker->userName,
-            'img' => $this->faker->imageUrl,
-            'occupations' => json_encode(Base::randomElements(static::$occupations, $count = Base::randomDigitNotNull()))
+            'birthday' => $this->faker->dateTimeThisCentury->format('Y-m-d'),
+            'img' => $this->faker->imageUrl(250,250,'people'),
+            'occupations' => $this->getRandomOccupations(),
         ]);
     }
 }

@@ -9,7 +9,13 @@ class Quote extends Model
 {
     use HasFactory;
 
-    public function character() {
+    public function character()
+    {
         return $this->belongsTo(Character::class);
+    }
+
+    public function episode()
+    {
+        return $this->belongsTo(Episode::class);
     }
 }

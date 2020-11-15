@@ -15,7 +15,7 @@ class QuoteController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->get('limit')) {
+        if ($request->get('limit')) {
             $limit = $request->get('limit');
         } else {
             $limit = 10;
@@ -25,12 +25,12 @@ class QuoteController extends Controller
             $quotes = Quote::paginate($limit);
 
             return responder()
-                    ->success($quotes)
-                    ->respond(200);
-        } catch(\Exception $e) {
+                ->success($quotes)
+                ->respond(200);
+        } catch (\Exception $e) {
             return responder()
-                    ->error($e->getMessage())
-                    ->respond(500);
+                ->error($e->getMessage())
+                ->respond(500);
         }
     }
 
@@ -42,7 +42,7 @@ class QuoteController extends Controller
             $characters = Character::orderByRaw('RAND()');
 
             if ($search) {
-                foreach(explode(' ', $search) as $s) {
+                foreach (explode(' ', $search) as $s) {
                     $characters = $characters->where('name', 'like', '%' . $s . '%');
                 }
             }
@@ -52,16 +52,16 @@ class QuoteController extends Controller
             $quote = $character->quotes()->orderByRaw('RAND()')->first();
 
             return responder()
-                    ->success($quote)
-                    ->respond(200);
-        } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                ->success($quote)
+                ->respond(200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return responder()
-                    ->error('not_found', 'The desired resource was not found')
-                    ->respond(404);
+                ->error('not_found', 'The desired resource was not found')
+                ->respond(404);
         } catch (\Exception $e) {
             return responder()
-                    ->error('exception', $e->getMessage())
-                    ->respond(500);
+                ->error('exception', $e->getMessage())
+                ->respond(500);
         }
     }
 }

@@ -10,7 +10,7 @@ class EpisodeController extends Controller
 {
     public function index(Request $request, TransformBuilder $transformation)
     {
-        if($request->get('limit')) {
+        if ($request->get('limit')) {
             $limit = $request->get('limit');
         } else {
             $limit = 10;
@@ -20,12 +20,12 @@ class EpisodeController extends Controller
             $episodes = Episode::paginate($limit);
 
             return responder()
-                    ->success($episodes)
-                    ->respond(200);
-        } catch(\Exception $e) {
+                ->success($episodes)
+                ->respond(200);
+        } catch (\Exception $e) {
             return responder()
-                    ->error($e->getMessage())
-                    ->respond(500);
+                ->error($e->getMessage())
+                ->respond(500);
         }
     }
 
@@ -34,16 +34,16 @@ class EpisodeController extends Controller
         try {
             $episode = Episode::findOrFail($id)->with('characters');
             return responder()
-                    ->success($episode)
-                    ->respond();
-        } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                ->success($episode)
+                ->respond();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return responder()
-                    ->error('not_found', 'Episode with ID = ' . $id . ' not found!')
-                    ->respond(404);
-        } catch(\Exception $e) {
+                ->error('not_found', 'Episode with ID = ' . $id . ' not found!')
+                ->respond(404);
+        } catch (\Exception $e) {
             return responder()
-                    ->error('exception', $e->getMessage())
-                    ->respond(500);
+                ->error('exception', $e->getMessage())
+                ->respond(500);
         }
     }
 }

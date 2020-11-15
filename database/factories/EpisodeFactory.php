@@ -22,7 +22,7 @@ class EpisodeFactory extends Factory
      */
     public function definition() {
         return array_merge(Populator::guessFormatters($this->model), [
-            'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'title' => substr($this->faker->sentence($nbWords = 6, $variableNbWords = true), 0, -1),
         ]);
     }
 }

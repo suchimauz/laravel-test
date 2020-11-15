@@ -13,8 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(EpisodeSeeder::class);
-        $this->call(CharacterSeeder::class);
-        $this->call(QuoteSeeder::class);
+        $this->call(BreakingBadSeeder::class);
     }
 }

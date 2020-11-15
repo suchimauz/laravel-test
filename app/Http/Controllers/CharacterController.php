@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 
 class CharacterController extends Controller
 {
-
     public function index(Request $request)
     {
         $search = $request->get('name');
 
-        if($request->get('limit')) {
+        if ($request->get('limit')) {
             $limit = $request->get('limit');
         } else {
             $limit = 10;
@@ -22,18 +21,25 @@ class CharacterController extends Controller
             $characters = new Character();
 
             if ($search) {
-                foreach(explode(' ', $search) as $s) {
+                foreach (explode(' ', $search) as $s) {
                     $characters = $characters->where('name', 'like', '%' . $s . '%');
                 }
             }
 
+            //$characters = $characters->with('episodes', 'quotes');
+
             return responder()
-                    ->success($characters->paginate($limit))
-                    ->respond(200);
-        } catch(\Exception $e) {
+                ->success($characters->paginate($limit))
+                ->with('episodes', 'quotes')
+                ->only([
+                    'episodes' => ['id'],
+                    'quotes' => ['id'],
+                ])
+                ->respond(200);
+        } catch (\Exception $e) {
             return responder()
-                    ->error($e->getMessage())
-                    ->respond(500);
+                ->error($e->getMessage())
+                ->respond(500);
         }
     }
 
@@ -43,12 +49,12 @@ class CharacterController extends Controller
             $character = Character::orderByRaw("RAND()")->first();
 
             return responder()
-                    ->success($character)
-                    ->respond(200);
+                ->success($character)
+                ->respond(200);
         } catch (\Exception $e) {
             return responder()
-                    ->success($e->getMessage()())
-                    ->respond(500);
+                ->success($e->getMessage()())
+                ->respond(500);
         }
     }
 }

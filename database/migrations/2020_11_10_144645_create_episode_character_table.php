@@ -13,13 +13,13 @@ class CreateEpisodeCharacterTable extends Migration
      */
     public function up()
     {
-        Schema::create('episode_character', function (Blueprint $table) {
+        Schema::create('character_episode', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('episode_id');
             $table->unsignedBigInteger('character_id');
+            $table->unsignedBigInteger('episode_id');
 
-            $table->foreign('episode_id')->references('id')->on('episodes');
             $table->foreign('character_id')->references('id')->on('characters');
+            $table->foreign('episode_id')->references('id')->on('episodes');
         });
     }
 
