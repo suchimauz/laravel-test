@@ -22,7 +22,7 @@ class CharacterFactory extends Factory
      * @return array
      */
 
-    private static $occupations = [
+    public static $occupations = [
         'Policeman', 'Webmaster', 'Public Relations Manager',
         'Secretary', 'Athlete', 'Receptionist', 'Filmmaker',
         'Dietician', 'Engineer', 'Teaching', 'Bouncer', 'Editor',

@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Character extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
+
+    protected $guarded = ['id'];
+    protected $fillable = [
+        'name', 'birthday', 'occupations', 'img', 'nickname', 'portrayed'
+    ];
 
     protected $casts = [
         'occupations' => Json::class

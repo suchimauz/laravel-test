@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Episode extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
-    protected $fillable = [];
+    protected $guarded = ['id'];
+    protected $fillable = [
+        'title', 'air_date'
+    ];
 
     public function characters()
     {

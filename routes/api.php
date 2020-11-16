@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\ApiRequestStatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\QuoteController;
 |
 */
 
-Route::group(['middleware' => ['throttle:20']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'throttle:20']], function () {
     Route::group(['prefix' => 'episodes'], function () {
         Route::get('/', [EpisodeController::class, 'index']);
         Route::get('{id}', [EpisodeController::class, 'show']);
@@ -32,4 +33,7 @@ Route::group(['middleware' => ['throttle:20']], function () {
         Route::get('/', [QuoteController::class, 'index']);
         Route::get('random', [QuoteController::class, 'random']);
     });
+
+    Route::get('/stats', [ApiRequestStatsController::class, 'stats']);
+    Route::get('/my-stats', [ApiRequestStatsController::class, 'userStats']);
 });
