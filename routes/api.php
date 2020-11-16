@@ -17,17 +17,19 @@ use App\Http\Controllers\QuoteController;
 |
 */
 
-Route::group(['prefix' => 'episodes'], function () {
-    Route::get('/', [EpisodeController::class, 'index']);
-    Route::get('{id}', [EpisodeController::class, 'show']);
-});
+Route::group(['middleware' => ['throttle:20']], function () {
+    Route::group(['prefix' => 'episodes'], function () {
+        Route::get('/', [EpisodeController::class, 'index']);
+        Route::get('{id}', [EpisodeController::class, 'show']);
+    });
 
-Route::group(['prefix' => 'characters'], function () {
-    Route::get('/', [CharacterController::class, 'index']);
-    Route::get('random', [CharacterController::class, 'random']);
-});
+    Route::group(['prefix' => 'characters'], function () {
+        Route::get('/', [CharacterController::class, 'index']);
+        Route::get('random', [CharacterController::class, 'random']);
+    });
 
-Route::group(['prefix' => 'quotes'], function () {
-    Route::get('/', [QuoteController::class, 'index']);
-    Route::get('random', [QuoteController::class, 'random']);
+    Route::group(['prefix' => 'quotes'], function () {
+        Route::get('/', [QuoteController::class, 'index']);
+        Route::get('random', [QuoteController::class, 'random']);
+    });
 });
