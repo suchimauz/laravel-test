@@ -22,7 +22,7 @@ class Handler
                 base_path('app/Telegram/Commands'),
                 base_path('app/Telegram/Commands/Keyboard'),
             ]);
-            $telegram->handleGetUpdates();
+            $telegram->handleGetUpdates($timeout = 60);
 
         } catch (TelegramException $e) {
             echo $e->getMessages();

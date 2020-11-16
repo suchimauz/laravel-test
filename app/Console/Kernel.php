@@ -27,9 +27,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-             new Telegram();
-        })->cron('* * * * *');
+        while (true) {
+            new Telegram();
+        }
 
         $schedule->call(function () {
             $totalRequests = 0;
