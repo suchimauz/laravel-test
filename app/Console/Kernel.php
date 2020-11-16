@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use App\Models\User;
-use App\Telegram\Handler;
+use App\Telegram\Handler as Telegram;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Cache;
@@ -27,6 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->call(function () {
+             new Telegram();
+        })->cron('* * * * *');
+
         $schedule->call(function () {
             $totalRequests = 0;
             foreach (User::all()->pluck('id') as $userId) {
