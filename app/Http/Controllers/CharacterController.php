@@ -51,7 +51,7 @@ class CharacterController extends Controller
                 ->respond(200);
         } catch (\Exception $e) {
             return responder()
-                ->success($e->getMessage()())
+                ->error($e->getMessage())
                 ->respond(500);
         }
     }
